@@ -14,7 +14,7 @@ newsletterForm.addEventListener("submit", (event) => {
 
   if (isValid) {
     // Form is valid, redirect to subscription.html
-    window.location.href = 'subscription.html';
+    window.location.href = 'sector-selection.html';
   } else {
     // Form is invalid, display error messages is handled within validateInputs
   }
