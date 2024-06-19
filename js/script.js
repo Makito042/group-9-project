@@ -99,31 +99,32 @@ newsletterForm.addEventListener("submit", (event) => {
 });
 
 function validateInputs(firstName, lastName, email, password, subscriptionPreferences) {
+  let errors = [];
   let isValid = true;
 
-  if (!firstName.match(/^[a-zA-Z]+$/)) {
-    isValid = false;
-    displayErrorMessage("First name must contain only letters.");
+  if (!firstName.match(/^[a-zA-Z'-\s]+$/)) {
+    errors.push("First name must contain only letters, apostrophes, hyphens, and spaces.");
   }
 
-  if (!lastName.match(/^[a-zA-Z]+$/)) {
-    isValid = false;
-    displayErrorMessage("Last name must contain only letters.");
+  if (!lastName.match(/^[a-zA-Z'-\s]+$/)) {
+    errors.push("Last name must contain only letters, apostrophes, hyphens, and spaces.");
   }
 
-  if (!email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
-    isValid = false;
-    displayErrorMessage("Email address is invalid.");
+  if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+    errors.push("Please enter a valid email address.");
   }
 
-  if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*]).{8,}$/)) {
-    isValid = false;
-    displayErrorMessage("Password must be at least 8 characters, contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+  if (password.length < 8) {
+    errors.push("Password must be at least 8 characters long.");
   }
 
   if (subscriptionPreferences.length === 0) {
+    errors.push("Please select at least one subscription preference.");
+  }
+
+  if (errors.length > 0) {
     isValid = false;
-    displayErrorMessage("Please select at least one subscription preference.");
+    displayErrorMessages(errors); // Assuming this function can handle an array of error messages
   }
 
   return isValid;
